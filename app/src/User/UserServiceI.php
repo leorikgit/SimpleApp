@@ -5,4 +5,5 @@ interface UserServiceI{
     public function login($email, $password);
     public function register($data);
     public function getUser();
+    public function logout();
 }

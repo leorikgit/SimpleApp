@@ -1,10 +1,14 @@
 <?php
 include_once __DIR__."../../core/ini.php";
-include __DIR__ .'../../includes/header.php';
+
 use Utility\Input;
 use Utility\Token;
 use Validation\Validation;
 use Utility\Redirect;
+use Session\Session;
+use Config\Config;
+
+$validation = new Validation($conn);
 if(Input::exist('POST') && Input::get('login')){
 
     if(Token::check(Input::get('token'))){
@@ -15,7 +19,7 @@ if(Input::exist('POST') && Input::get('login')){
             $input[$key] = sanitaze($value);
         }
 
-        $validation = new Validation($conn);
+
         $validation->check($input, array(
             'email' => array(
                 'required' => true,
@@ -25,43 +29,57 @@ if(Input::exist('POST') && Input::get('login')){
                 'required' => true
             )
         ));
-        if($validation->passed()){
+        if($validation->passed()) {
             $user = $userService->login($input['email'], $input['password']);
 
-            if($user) {
-                Redirect::to('profile.php');
+            if ($user) {
+                Redirect::to('index.php');
             }
-            echo "password or email doesnt match.";
 
-        }else{
-
-            print_r($validation->getErrors());
         }
+
 
     }
 }
+$page_title = Config::get('login_page/title');
+include_once ROOT_PATH."includes/header.php";
+
 ?>
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <form method="POST" action="login.php">
-        <p>
-            <label for="email">Email:</label>
-            <input type="text" value="" name="email" id="email">
-        </p>
-        <p>
-            <label for="password">Password:</label>
-            <input type="password" value="" name="password" id="password">
-        </p>
-        <input type="hidden" name="token" value="<?php echo Token::tokenForm()?>">
-        <button type="submit" name="login" value="login">login</button>
-    </form>
-</body>
-</html>
+<div id="background">
+    <div id="registerContainer">
+        <div id="inputContainer">
+            <h1>Login</h1>
+            <div id="newAccountFlashMessage"><h2><?php echo Session::flash('success')?></h2></div>
+            <form method="POST" action="<?php echo BASE_URL."login.php"?>">
+                <p>
+                    <span class="validationError"><?php echo $validation->getError('email')? $validation->getError('email'):''?></span>
+                    <label for="email">Email</label>
+                    <input type="Email" value="<?php echo Input::get('email')?>" name="email" id="email" placeholder="e.g vidavi@gmail.com">
+                </p>
+                <p>
+                    <span class="validationError"><?php echo $validation->getError('password')? $validation->getError('password'):''?></span>
+
+                    <label for="password">Password</label>
+                    <input type="password" value="" name="password" id="password" placeholder="Yout password">
+                </p>
+                <input type="hidden" name="token" value="<?php echo Token::tokenForm()?>">
+                <button type="submit" name="login" value="login">Submit</button>
+            </form>
+            <div id="hasAccountText">
+                <a href="<?php echo BASE_URL."login.php" ?>">Already have an account? Log in here.</a>
+            </div>
+        </div>
+        <div id="registerText">
+            <h1>Get great music, right now</h1>
+            <h2>Listen to loads of songs for free.</h2>
+            <ul>
+                <li>Discover music you'll fall in love with</li>
+                <li>Create your own playlists</li>
+                <li>Follow artists to keep up to date</li>
+            </ul>
+        </div>
+
+    </div>
+
+</div>
+<?php include_once ROOT_PATH."includes/footer.php";?>

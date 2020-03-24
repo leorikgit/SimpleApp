@@ -2,14 +2,14 @@
 namespace User;
 class UserQuery implements UserQueryI{
 
-    private $_userMapper,
-        $_userFactory;
+    private $_userMapper;
 
 
-    public function __construct(UserMapperI $userMapper, UserFactory $userFactory)
+
+    public function __construct(UserMapperI $userMapper)
     {
         $this->_userMapper = $userMapper;
-        $this->_userFactory = $userFactory;
+
     }
 
     public function findByEmail($email)

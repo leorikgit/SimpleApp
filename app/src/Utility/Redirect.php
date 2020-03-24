@@ -11,6 +11,10 @@ class Redirect
                         include_once ROOT_PATH. "includes/errors/404.php";
                         exit;
                     break;
+                    case 403:
+                        header('HTTP/1.0 403 Forbidden');
+                        include_once  ROOT_PATH."includes/errors/403.php";
+                        exit;
                 }
             }
             header("Location: ".BASE_URL.$location);

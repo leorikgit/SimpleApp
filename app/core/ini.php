@@ -21,7 +21,17 @@ $GLOBALS['config'] = array(
     'session' => array(
         'token_name' => 'token',
         'session_name' => 'user'
+    ),
+    'home_page' => array(
+        'title' => 'Home',
+    ),
+    'login_page' => array(
+        'title' => 'login',
+    ),
+    'register_page' => array(
+        'title' => 'Register',
     )
+
 );
 
 spl_autoload_register(function($className) {

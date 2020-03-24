@@ -1,18 +1,23 @@
 <?php
 include __DIR__ .'../../core/ini.php';
+use Utility\Redirect;
+use Utility\Input;
+use Config\Config;
+if(!$userService->isLogin()){
+    Redirect::to('login.php');
+}
 
-include __DIR__ .'../../includes/header.php';
+if(Input::exist('HTTP_X_REQUESTED_WITH')) {
+    if(!$userService->isLogin()){
+        Redirect::to(403);
+    }
+    include_once ROOT_PATH . "indexContent.php";
+    exit();
+}
 
-?>
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
 
-</html>
+
+$page_title = Config::get('home_page/title');
+include ROOT_PATH .'includes/header.php';
+
+include_once ROOT_PATH . 'includes/indexMainContainer.php';

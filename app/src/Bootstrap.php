@@ -14,5 +14,5 @@ $userFactory = new UserFactory();
 $userRepository = new UserRepository($userMapper, $userFactory);
 $groupMapper = new \Group\GroupMapper($conn);
 
-$userQuery = new UserQuery($userMapper, $userFactory);
+$userQuery = new UserQuery($userMapper);
 $userService = new UserService($userRepository, $userQuery, $userFactory, $groupMapper);

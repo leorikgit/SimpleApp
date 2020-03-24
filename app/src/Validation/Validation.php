@@ -19,23 +19,23 @@ class Validation
                 $value = trim($source[$item]);
 
                 if($rule === 'required' && empty($value)){
-                    $this->addError("{$item} is required.");
+                    $this->addError($item,"{$item} is required.");
                 }else{
                     switch($rule){
                         case 'min':
 
                             if(strlen($value) < $rule_value){
-                                $this->addError("{$item} must be a minimum of {$rule_value} characters.");
+                                $this->addError($item,"{$item} must be a minimum of {$rule_value} characters.");
                             }
                             break;
                         case 'max':
                             if(strlen($value) > $rule_value){
-                                $this->addError("{$item} must be a maximum of {$rule_value} characters.");
+                                $this->addError($item,"{$item} must be a maximum of {$rule_value} characters.");
                             }
                             break;
                         case 'match':
                             if($value != $source[$rule_value]){
-                                $this->addError("{$item} must match {$rule_value}.");
+                                $this->addError($item,"{$item} must match {$rule_value}.");
 
                             }
 
@@ -46,7 +46,7 @@ class Validation
 
 
                            if($result){
-                               $this->addError("{$item} {$value} already exist.");
+                               $this->addError($item, "{$item} {$value} already exist.");
                            }
                             break;
                     }
@@ -63,7 +63,11 @@ class Validation
     public function getErrors(){
         return $this->_errors;
     }
-    private function addError($error){
-        $this->_errors[] = $error;
+    private function addError($item, $error){
+        $this->_errors[$item] = $error;
+    }
+    public function getError($param){
+
+        return isset($this->_errors[$param]) ? $this->_errors[$param] : false;
     }
 }

@@ -72,6 +72,13 @@ class UserService implements UserServiceI{
 
 
     }
+    public function logout(){
+        $sessionName = Config::get('session/session_name');
+        $this->_user = false;
+        if(Session::exist($sessionName)){
+            Session::delete($sessionName);
+        }
+    }
     public function register($data)
     {
         $data['group_id'] = 1;
@@ -81,6 +88,7 @@ class UserService implements UserServiceI{
         $data['created_at'] = $now;
         $data['updated_at'] = null;
         $data['password'] = $hashPassword = Hash::generate($data['password']);
+
         $user = $this->_userFactory->createUser($data);
         if($this->_userRepository->save($user)){
            return true;

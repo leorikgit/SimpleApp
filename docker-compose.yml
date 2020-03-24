@@ -2,7 +2,7 @@ version: "3.2"
 services:
   web:
     build: './web/'
-    container_name: app
+    container_name: music_app
     depends_on:
       - php
       - mysql
@@ -15,14 +15,14 @@ services:
       - ./app:/var/www/html/
   php:
     build: './php/'
-    container_name: php
+    container_name: music_php
     networks:
       - backend
     volumes:
       - ./app:/var/www/html/
   mysql:
     build: './mysql'
-    container_name: mysql
+    container_name: music_mysql
     networks:
       - backend
     ports:
@@ -31,7 +31,7 @@ services:
       - ./my-data/db:/var/lib/mysql
   bs:
     image: ustwo/browser-sync
-    container_name: bs
+    container_name: music_bs
     command: start --proxy "web:80" --files "**/*"
     volumes:
       - ./app/:/source
