@@ -5,12 +5,6 @@ use Database\DatabaseI;
 
 Class UserFactory implements UserFactoryI{
 
-
-    public function __construct()
-    {
-
-    }
-
     public function createUser($data)
     {
 

@@ -11,7 +11,7 @@ if(Input::exist('HTTP_X_REQUESTED_WITH')) {
     if(!$userService->isLogin()){
         Redirect::to(403);
     }
-    include_once ROOT_PATH . "includes/indexContent.php";
+    include_once ROOT_PATH . "includes/artistContent.php";
     exit();
 }
 
@@ -22,6 +22,6 @@ include_once ROOT_PATH .'includes/header.php';
 
 include_once ROOT_PATH."includes/mainContainerHeader.php";
 
-    include_once ROOT_PATH."includes/indexContent.php" ;
+include_once ROOT_PATH."includes/artistContent.php" ;
 
 include_once ROOT_PATH."includes/mainContainerFooter.php";

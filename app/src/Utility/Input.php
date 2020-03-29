@@ -10,6 +10,8 @@ class Input
             case 'GET':
                 return ($_SERVER['REQUEST_METHOD'] === 'GET')? true : false;
                 break;
+            case 'HTTP_X_REQUESTED_WITH':
+                return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&  $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest')? true : false;
             default:
                 return false;
                 break;

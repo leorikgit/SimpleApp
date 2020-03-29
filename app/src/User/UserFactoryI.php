@@ -2,5 +2,5 @@
 namespace User;
 
 interface UserFactoryI{
-    public function createUser($type);
+    public function createUser($data);
 }

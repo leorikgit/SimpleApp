@@ -18,6 +18,7 @@ class PdoAdapter implements AdapterI{
     {
         return $this->query($sql, array($params))->getResult();
     }
+
     public function insert($table, $properties)
     {
 
@@ -44,9 +45,13 @@ class PdoAdapter implements AdapterI{
         // TODO: Implement update() method.
     }
 
-    public function delete()
+    public function delete($sql, $id)
     {
-        // TODO: Implement delete() method.
+        $this->query($sql, $id);
+        if(!$this->getError() && $this->count() > 0){
+            return true;
+        }
+        return false;
     }
 
     public function query($sql, $params = array()){

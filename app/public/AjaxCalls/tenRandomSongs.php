@@ -6,5 +6,5 @@ use \Song\SongCollection;
 $songMapper = new SongMapper($conn);
 $songCollection = new SongCollection();
 $songQuery = new SongQuery($songMapper, $songCollection);
-$songs = $songQuery->findAllAlbumSongsByID();
+$songs = $songQuery->findTenRandomSongs();
 echo json_encode($songs);

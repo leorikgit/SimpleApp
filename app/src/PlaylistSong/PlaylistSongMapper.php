@@ -1,25 +1,24 @@
 <?php
-namespace Album;
+namespace PlaylistSong;
 use Database\Adapter\AdapterI;
 
-class AlbumMapper implements AlbumMapperI{
+class PlaylistSongMapper implements PlaylistSongMapperI{
     private $_adapter;
 
-    public function __construct(AdapterI $source)
+    public function __construct(AdapterI $adapter)
     {
-        $this->_adapter = $source;
+        $this->_adapter = $adapter;
     }
-    public function find($id)
+    public function find()
     {
-        $sql = "SELECT * FROM albums WHERE id=?";
-        return $this->_adapter->find($sql, $id);
+        // TODO: Implement find() method.
     }
-    public function create($data)
+    public function create($params)
     {
-        // TODO: Implement create() method.
+
+        return $this->_adapter->insert('songs_playlist',$params );
     }
-    public function query($sql, $one, $params)
-    {
+    public function query($sql, $one, $params){
         $result =  $this->_adapter->query($sql, $params);
 
         if($result->getError()){
@@ -30,4 +29,5 @@ class AlbumMapper implements AlbumMapperI{
         }
         return $this->_adapter->query($sql, $params)->getResults();
     }
+
 }

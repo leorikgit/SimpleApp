@@ -33,7 +33,9 @@ class UserService implements UserServiceI{
             }
         }
     }
-
+    public function getUserId(){
+        return $this->_user->getId();
+    }
     public function isLogin()
     {
         return $this->_isLogin;
