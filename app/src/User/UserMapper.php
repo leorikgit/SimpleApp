@@ -30,4 +30,7 @@ class UserMapper implements UserMapperI{
 
         return $this->_adapter->insert('users', $params);
     }
+    public function update($params){
+        return $this->_adapter->update('users', $params);
+    }
 }

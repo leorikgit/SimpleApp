@@ -85,6 +85,4 @@ if($songs){
         }
         ?>
     </select>
-    <div class="item">next option</div>
-    <div class="item">next option</div>
 </nav>

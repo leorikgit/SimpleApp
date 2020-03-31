@@ -20,7 +20,9 @@ class Validation
 
                 if($rule === 'required' && empty($value)){
                     $this->addError($item,"{$item} is required.");
+
                 }else{
+
                     switch($rule){
                         case 'min':
 
@@ -40,8 +42,14 @@ class Validation
                             }
 
                             break;
+                        case 'emailFormat':
+                            if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                                $this->addError($item,"Invalid format.");
+                            }
+
+                            break;
                         case 'unique':
-                            $sql = "SELECT * FROM ".$rule_value." WHERE email=?";
+                            $sql = "SELECT * FROM ".$rule_value." WHERE ".$item."=?";
                             $result = $this->_db->find($sql, $value);
 
 

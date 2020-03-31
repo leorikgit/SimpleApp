@@ -21,8 +21,6 @@ class PdoAdapter implements AdapterI{
 
     public function insert($table, $properties)
     {
-
-
         $keys = implode(',',array_keys($properties));
         $counter = 1;
         $values = "";
@@ -40,14 +38,32 @@ class PdoAdapter implements AdapterI{
         }
         return false;
     }
-    public function update()
+    public function update($table, $properties)
     {
-        // TODO: Implement update() method.
+        $keys = implode(',',array_keys($properties));
+        $counter = 1;
+        $set = "";
+        foreach ($properties as $name => $value){
+            $set .="{$name}=?";
+            if($counter < count($properties)){
+                $set .= ',';
+                $counter++;
+            }
+        }
+        $sql = "UPDATE ".$table." SET ".$set." WHERE id=".$properties['id']." ";
+        $this->query($sql, $properties);
+        if(!$this->getError() || $this->count() > 0){
+            return true;
+        }
+
+        return false;
     }
 
     public function delete($sql, $id)
     {
+
         $this->query($sql, $id);
+
         if(!$this->getError() && $this->count() > 0){
             return true;
         }
@@ -70,13 +86,17 @@ class PdoAdapter implements AdapterI{
                 if($queryFunction[0] == "SELECT") {
                     $this->_result = $this->_query->fetchAll(\PDO::FETCH_ASSOC);
                 }
+
                 $this->_count = $this->_query->rowCount();
+
             }else{
                 $this->_error = true;
             }
 
             return $this;
         }
+
+
     }
     public function getResult(){
         if(!$this->_result){

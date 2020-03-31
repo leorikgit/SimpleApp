@@ -20,6 +20,21 @@ $(document).on("change", "select.playlist", function(){
        closeOptionMenu();
     });
 });
+function deleteSongFromPlaylist(button, playlistId){
+    console.log(playlistId);
+    var songId =$(button).prevAll(".songId").val();
+    $.post("AjaxCalls/removeSongFromPlaylist.php",{songId:songId, playlistId:playlistId}).done(function(response){
+        var returnedData = JSON.parse(response);
+        if(returnedData['status'] === 1){
+            toastr.success(returnedData['message'], 'Success');
+        }else{
+            toastr.error(returnedData['message'], 'Error');
+        }
+
+        loadpage('playlist.php?id='+ playlistId);
+        console.log(playlistId);
+    });
+}
 $(document).click(function(click){
 
 
@@ -205,3 +220,34 @@ function closeOptionMenu() {
     }
 
 }
+function updateEmail(className){
+    var emailVal = $("."+className).val();
+    $.post("AjaxCalls/changeEmail.php",{email : emailVal}).done(function(response){
+        var returnedData = JSON.parse(response);
+        if(returnedData['status'] == '0'){
+            $("."+className).nextAll(".message").text(returnedData['message']['email'] );
+
+        }else{
+            $("."+className).nextAll(".message").text(returnedData['message'] );
+        }
+    });
+}
+function updatePassword(oldPassword, newPassword, confirmPassword){
+    var oldPasswordVal = $("."+oldPassword).val();
+    var newPasswordVal = $("."+newPassword).val();
+    var confirmPasswordVal = $("."+confirmPassword).val();
+    console.log(confirmPasswordVal);
+    $.post("AjaxCalls/updatePassword.php",{oldPassword : oldPasswordVal, newPassword : newPasswordVal, confirmPassword : confirmPasswordVal}).done(function(response){
+        var returnedData = JSON.parse(response);
+        console.log(returnedData);
+        if(returnedData['status'] === '0'){
+            $("."+oldPassword).nextAll(".oldPasswordMessage").text(returnedData['message']['oldPassword'] );
+            $("."+newPassword).nextAll(".newPasswordMessage").text(returnedData['message']['newPassword'] );
+            $("."+confirmPassword).nextAll(".confirmPasswordMessage").text(returnedData['message']['confirmPassword'] );
+
+        }else{
+            $("."+confirmPassword).nextAll(".confirmPasswordMessage").text(returnedData['message'] );
+        }
+    });
+}
+

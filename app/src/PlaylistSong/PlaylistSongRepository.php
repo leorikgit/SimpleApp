@@ -31,8 +31,8 @@ class PlaylistSongRepository implements PlaylistSongRepositoryI{
 
         return $this->_playlistSongMapper->create($data);
     }
-    public function remove(PlaylistSongI $playlistSong)
+    public function delete(PlaylistSongI $playlistSong)
     {
-        // TODO: Implement remove() method.
+        return $this->_playlistSongMapper->delete($playlistSong->getId());
     }
 }

@@ -41,4 +41,7 @@ class UserRepository implements UserRepositoryI{
     public function create($data){
         return $this->_userMapper->create($data);
     }
+    public function update($data){
+        return $this->_userMapper->update($data);
+    }
 }

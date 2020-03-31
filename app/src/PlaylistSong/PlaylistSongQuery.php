@@ -6,7 +6,10 @@ class PlaylistSongQuery implements PlaylistSongQueryI{
     {
         $this->_playlistSongMapper = $playlistSongMapper;
     }
-
+    public function findSongById($id){
+        $sql = "SELECT * FROM songs_playlist WHERE song_id=?";
+        return $this->_playlistSongMapper->query($sql, TRUE, array($id));
+    }
     public function findSongsByPlaylistId($id){
         $sql = "SELECT * FROM songs_playlist WHERE playlist_id=?";
         return $this->_playlistSongMapper->query($sql, FALSE, array());
@@ -18,6 +21,11 @@ class PlaylistSongQuery implements PlaylistSongQueryI{
     public function checkIFExists($data){
         $sql = "SELECT * FROM songs_playlist WHERE playlist_id=? AND song_id=?";
         return $this->_playlistSongMapper->query($sql, TRUE, $data);
+    }
+    public function findSong($songId, $playlistId){
+
+        $sql = "SELECT * FROM songs_playlist WHERE song_id=? AND playlist_id=?";
+        return $this->_playlistSongMapper->query($sql, TRUE, array($songId, $playlistId));
     }
 
 }

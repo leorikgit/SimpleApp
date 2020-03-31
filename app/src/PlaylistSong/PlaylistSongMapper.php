@@ -9,10 +9,11 @@ class PlaylistSongMapper implements PlaylistSongMapperI{
     {
         $this->_adapter = $adapter;
     }
-    public function find()
+    public function find($id)
     {
-        // TODO: Implement find() method.
+        return $this->_adapter->find("SELECT * FROM songs_playlist WHERE id=?", $id);
     }
+
     public function create($params)
     {
 
@@ -28,6 +29,9 @@ class PlaylistSongMapper implements PlaylistSongMapperI{
             return $result =  $this->_adapter->query($sql, $params)->getResult();
         }
         return $this->_adapter->query($sql, $params)->getResults();
+    }
+    public function delete($id){
+        return $this->_adapter->delete("DELETE FROM songs_playlist WHERE id=?", array($id));
     }
 
 }

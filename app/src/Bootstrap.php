@@ -16,3 +16,4 @@ $groupMapper = new \Group\GroupMapper($conn);
 
 $userQuery = new UserQuery($userMapper);
 $userService = new UserService($userRepository, $userQuery, $userFactory, $groupMapper);
+$user = $userService->getUser();

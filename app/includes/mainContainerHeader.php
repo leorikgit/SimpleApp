@@ -23,7 +23,8 @@
                         </a>
                     </div>
                     <div class="navItem">
-                        <a href="" class="navItemLink">Reace Kennay</a>
+                        <a  class="navItemLink pointer" onclick="loadpage('settings.php')">Settings
+                        </a>
                     </div>
                 </div>
             </nav>

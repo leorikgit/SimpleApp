@@ -13,7 +13,9 @@ $songCollection = new \Song\SongCollection();
 $songQuery = new \Song\SongQuery($songMapper, $songCollection);
 $songs = $songQuery->findAllSongsByPlaylistId($playlist['id']);
 
-
+$playlistMapper = new \Playlist\PlaylistMapper($conn);
+$playlistQuery = new \Playlist\PlaylistQuery($playlistMapper);
+$playlists = $playlistQuery->showPlaylistsNameByOwnerId($userService->getUserId());
 
 ?>
 <div class="entityInfo">
@@ -49,7 +51,8 @@ if($songs){
                         <span class="tackArtist"><?php echo $song['artist_name']?></span>
                     </div>
                     <div class="trackOption">
-                        <img src="<?php echo BASE_URL."assets/images/icons/more.png"?>">
+                        <input class="songId" type="hidden" value="<?php echo $song['id']?>">
+                        <img class="optionButton pointer" src="<?php echo BASE_URL."assets/images/icons/more.png"?>" onclick="openOptionMenu(this)">
                     </div>
                     <div class="trackDuration">
                         <span><?php echo $song['duration']?></span>
@@ -67,5 +70,22 @@ if($songs){
     </div>
     <?php
 }
+
 ?>
+
+<nav class="optionMenu">
+    <input type="hidden" class="songId" value="">
+    <select class="item playlist">
+        <option value="">Select playlist</option>
+        <?php
+        foreach ($playlists as $thisPlaylist){
+            echo "<option value=".$thisPlaylist['id'].">".$thisPlaylist['name']."</option>";
+        }
+
+        ?>
+
+    </select>
+    <div class="item" onclick="deleteSongFromPlaylist(this, <?php echo $playlist['id']?>);">Remove from playlist</div>
+</nav>
+
 
